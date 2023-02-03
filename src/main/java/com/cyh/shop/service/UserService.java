@@ -2,7 +2,6 @@ package com.cyh.shop.service;
 
 import com.cyh.shop.bean.UserBean;
 import com.cyh.shop.dao.UserDao;
-import com.cyh.shop.util.Md5Util;
 import com.cyh.shop.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,4 +26,14 @@ public class UserService {
             return -1;
         }
     }
+
+    public UserBean selectUserById(String id){
+        return  userDao.selectUserById(id);
+    }
+
+    public UserBean selectUserByUserName(String username){
+        return  userDao.selectUserByUserName(username);
+    }
+
+    public int updateUserInfo(UserBean userBean){return userDao.updateUserById(userBean);}
 }

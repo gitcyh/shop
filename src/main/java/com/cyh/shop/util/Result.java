@@ -15,6 +15,14 @@ public class Result {
         return code;
     }
 
+    public Map<String, Object> getData() {
+        return data;
+    }
+
+    public void setData(Map<String, Object> data) {
+        this.data = data;
+    }
+
     public void setCode(int code) {
         this.code = code;
     }
@@ -30,17 +38,25 @@ public class Result {
     public Result(int code, String msg) {
         this.code = code;
         this.msg = msg;
+        this.data = data;
     }
 
     public Result(int code, String msg, Map<String, Object> data) {
         this.code = code;
         this.msg = msg;
-        this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "code:" + code +
+                ",msg:" + msg +
+                ",data:" + data +
+                "}";
     }
 
     public static Result success(){
-        Result result = new Result(200,"success");
-        return result;
+        return new Result(200,"success");
     }
 
     public static Result fail(String... msg){
@@ -50,6 +66,12 @@ public class Result {
             return new Result(500,msg[0]);
         }
     }
+
+    public static Result error(int code,String message){
+        return new Result(code,message);
+    }
+
+
 
     public Result add(String key, Object value){
         this.data.put(key, value);

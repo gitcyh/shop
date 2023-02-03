@@ -9,9 +9,11 @@ public interface UserDao {
 
     int insert(UserBean record);
 
-    UserBean selectByPrimaryKey(String id);
+    UserBean selectUserById(String id);
 
-    int updateByPrimaryKey(UserBean record);
+    UserBean selectUserByUserName(String username);
+
+    int updateUserById(UserBean record);
 
     UserBean selectByNamePwd(UserBean record);
 

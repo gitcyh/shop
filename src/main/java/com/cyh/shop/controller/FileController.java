@@ -30,16 +30,21 @@ public class FileController {
             String fileName = name.substring(0,last);
             String type = name.substring(last+1,name.length());
             FileBean fileBean = new FileBean();
-            fileBean.setId(UUIDUtil.generateId());
+            String id = UUIDUtil.generateId();
+            fileBean.setId(id);
             fileBean.setFileName(fileName);
             fileBean.setFileType(type);
             fileBean.setFileSize(file.getSize());
             fileBean.setContent(file.getBytes());
-            fileService.upload(fileBean);
+            int result = fileService.upload(fileBean);
+            if(result > 0){
+                return Result.success().add("fileId",id);
+            }else {
+                return Result.fail("文件上传失败");
+            }
         } catch (IOException e) {
             return Result.fail("文件上传失败");
         }
-        return Result.success();
     }
 
 
