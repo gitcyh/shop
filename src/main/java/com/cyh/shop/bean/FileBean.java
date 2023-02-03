@@ -5,45 +5,35 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * UserBean
- * @author英哥
+ * file
+ * @author 
  */
 @Data
-public class UserBean implements Serializable {
+public class FileBean implements Serializable {
     /**
-     * 用户id
+     * 唯一id
      */
     private String id;
 
     /**
-     * 用户名
+     * 所属店铺id,为空则是系统文件
      */
-    private String username;
+    private String shopId;
 
     /**
-     * 密码
+     * 文件名称
      */
-    private String password;
+    private String fileName;
 
     /**
-     * 手机号
+     * 文件类型
      */
-    private String phone;
+    private String fileType;
 
     /**
-     * 邮箱用于找回密码
+     * 文件大小
      */
-    private String email;
-
-    /**
-     * 头像id
-     */
-    private String pictureId;
-
-    /**
-     * 角色
-     */
-    private Integer role;
+    private Long fileSize;
 
     /**
      * 创建时间
@@ -54,6 +44,11 @@ public class UserBean implements Serializable {
      * 最后一次修改时间
      */
     private Date updateTime;
+
+    /**
+     * 文件内容
+     */
+    private byte[] content;
 
     private static final long serialVersionUID = 1L;
 }
