@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyh.shop.dao.BrandSysDao">
+  <resultMap id="BaseResultMap" type="com.cyh.shop.bean.BrandSysBean">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, brand, create_time, update_time
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from brand_sys
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectBrandAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from brand_sys
+  </select>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from brand_sys
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.cyh.shop.bean.BrandSysBean" useGeneratedKeys="true">
+    insert into brand_sys (id,brand)
+    values (#{id,jdbcType=VARCHAR},#{brand,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="updateById" parameterType="com.cyh.shop.bean.BrandSysBean">
+    update brand_sys set brand = #{brand,jdbcType=VARCHAR} where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

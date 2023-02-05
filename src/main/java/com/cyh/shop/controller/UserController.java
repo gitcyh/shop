@@ -35,6 +35,16 @@ public class UserController {
         }
     }
 
+    @PostMapping("/logout")
+    public Object logout(@RequestBody UserBean userBean){
+        UserBean user = userService.selectUserById(userBean.getId());
+        if(user != null){
+            return Result.success();
+        }else {
+            return Result.fail();
+        }
+    }
+
 
     @PostMapping("/register")
     public Object register(@RequestBody UserBean userBean){

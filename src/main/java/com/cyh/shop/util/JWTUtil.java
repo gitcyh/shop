@@ -35,6 +35,7 @@ public class JWTUtil {
          return JWT.create().withAudience(userBean.getId()) // 将 userId 作为载荷
                  .withClaim("username",userBean.getUsername())
                  .withClaim("pictureId",userBean.getPictureId())
+                 .withClaim("userid",userBean.getId())
                  .withExpiresAt(DateUtil.offsetHour(new Date(),2)) //2小时后token过期
                  .sign(Algorithm.HMAC256(signature));
     }
