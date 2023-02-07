@@ -4,11 +4,12 @@
   <resultMap id="BaseResultMap" type="com.cyh.shop.bean.BrandSysBean">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="data_flag" jdbcType="INTEGER" property="dataFlag" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, brand, create_time, update_time
+    id, brand,data_flag, create_time, update_time
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -19,14 +20,13 @@
   </select>
 
   <select id="selectBrandAll" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" /> from brand_sys
+    select <include refid="Base_Column_List" /> from brand_sys where data_flag = 1
   </select>
 
 
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from brand_sys
-    where id = #{id,jdbcType=VARCHAR}
+    update brand_sys set data_flag = -1 where id = #{id,jdbcType=VARCHAR}
   </delete>
 
   <insert id="insert" parameterType="com.cyh.shop.bean.BrandSysBean" useGeneratedKeys="true">

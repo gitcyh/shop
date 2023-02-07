@@ -55,8 +55,12 @@ public class Result {
                 "}";
     }
 
-    public static Result success(){
-        return new Result(200,"success");
+    public static Result success(String... msg){
+        if(msg.length == 0){
+            return new Result(200,"success");
+        }else{
+            return new Result(500,msg[0]);
+        }
     }
 
     public static Result fail(String... msg){

@@ -28,6 +28,16 @@
     delete from file
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+
+  <delete id="deleteByIds" parameterType="java.util.List">
+    delete from file where id in (
+    <foreach collection="list" item="id"  separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+
+
   <insert id="insert" parameterType="com.cyh.shop.bean.FileBean">
     insert into file (id,shop_id, file_name, file_type, file_size, content)
     values (#{id,jdbcType=VARCHAR},#{shopId,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR},

@@ -27,5 +27,9 @@ public class BrandService {
         return brandSysDao.updateById(brandSysBean);
     }
 
+    public int deleteSysBrand(String id){
+        return brandSysDao.deleteByPrimaryKey(id);
+    }
+
 
 }

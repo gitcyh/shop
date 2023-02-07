@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyh.shop.dao.GoodsSysDao">
+  <resultMap id="BaseResultMap" type="com.cyh.shop.bean.GoodsSysBean">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="cat_id" jdbcType="VARCHAR" property="catId" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+    <result column="goods_num" jdbcType="VARCHAR" property="goodsNum" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="specs" jdbcType="VARCHAR" property="specs" />
+    <result column="img_id" jdbcType="VARCHAR" property="imgId" />
+    <result column="goods_desc" jdbcType="VARCHAR" property="goodsDesc" />
+    <result column="data_flag" jdbcType="TINYINT" property="dataFlag" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cat_id, brand_name, goods_num, goods_name, specs, img_id, goods_desc, data_flag, 
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" />
+    from goods_sys
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="getGoodsList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from goods_sys
+    where data_flag = 1
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from goods_sys
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.cyh.shop.bean.GoodsSysBean">
+    insert into goods_sys (id,cat_id, brand_name, goods_num,goods_name, specs, img_id, goods_desc)
+    values (#{id,jdbcType=VARCHAR},#{catId,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, #{goodsNum,jdbcType=VARCHAR},
+      #{goodsName,jdbcType=VARCHAR}, #{specs,jdbcType=VARCHAR}, #{imgId,jdbcType=VARCHAR}, #{goodsDesc,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="searchGoods" parameterType="com.cyh.shop.bean.GoodsSysBean">
+    select <include refid="Base_Column_List" /> from goods_sys
+    where
+    <if test="brandName != null">
+      brand_name like "%"#{brandName,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="goodsName != null">
+      and goods_name like "%"#{goodsName,jdbcType=VARCHAR}"%",
+    </if>
+    <if test="specs != null">
+      and specs liek "%"#{specs,jdbcType=VARCHAR}"%",
+    </if>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.cyh.shop.bean.GoodsSysBean">
+    update goods_sys
+    <set>
+      <if test="catId != null">
+        cat_id = #{catId,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null">
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null">
+        goods_num = #{goodsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="specs != null">
+        specs = #{specs,jdbcType=VARCHAR},
+      </if>
+      <if test="imgId != null">
+        img_id = #{imgId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDesc != null">
+        goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFlag != null">
+        data_flag = #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cyh.shop.bean.GoodsSysBean">
+    update goods_sys
+    set
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      specs = #{specs,jdbcType=VARCHAR},
+      goods_desc = #{goodsDesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

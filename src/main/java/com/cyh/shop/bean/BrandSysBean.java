@@ -30,5 +30,10 @@ public class BrandSysBean implements Serializable {
      */
     private Date updateTime;
 
+    /**
+     * 删除标志1:有效 -1:无效
+     */
+    private Integer dataFlag;
+
     private static final long serialVersionUID = 1L;
 }

@@ -1,5 +1,6 @@
 package com.cyh.shop.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cyh.shop.bean.BrandSysBean;
 import com.cyh.shop.service.BrandService;
 import com.cyh.shop.util.Result;
@@ -38,6 +39,17 @@ public class BrandController {
     @PostMapping("/sys/updateBrand")
     public Object sys_updateBrand(@RequestBody BrandSysBean brandSysBean){
         int result = brandService.updateSysBrand(brandSysBean);
+        if(result > 0 ){
+            return Result.success();
+        }else{
+            return Result.fail();
+        }
+    }
+
+    @PostMapping("/sys/deleteBrand")
+    public Object sys_deleteBrand(@RequestBody JSONObject jsonObject){
+        String id = jsonObject.getString("id");
+        int result = brandService.deleteSysBrand(id);
         if(result > 0 ){
             return Result.success();
         }else{
