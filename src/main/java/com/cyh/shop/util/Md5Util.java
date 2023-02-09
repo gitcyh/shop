@@ -8,6 +8,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class Md5Util {
 
+    public static void main(String[] args) {
+        System.out.println(md5("123456cyhZ"));
+    }
+
 
     /**
      * spring工具类生成md5

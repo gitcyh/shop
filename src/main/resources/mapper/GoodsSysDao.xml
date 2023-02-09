@@ -3,7 +3,7 @@
 <mapper namespace="com.cyh.shop.dao.GoodsSysDao">
   <resultMap id="BaseResultMap" type="com.cyh.shop.bean.GoodsSysBean">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="cat_id" jdbcType="VARCHAR" property="catId" />
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
     <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
     <result column="goods_num" jdbcType="VARCHAR" property="goodsNum" />
     <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
@@ -15,7 +15,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, cat_id, brand_name, goods_num, goods_name, specs, img_id, goods_desc, data_flag, 
+    id, category_id, brand_name, goods_num, goods_name, specs, img_id, goods_desc, data_flag,
     create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -37,8 +37,8 @@
   </delete>
 
   <insert id="insert" parameterType="com.cyh.shop.bean.GoodsSysBean">
-    insert into goods_sys (id,cat_id, brand_name, goods_num,goods_name, specs, img_id, goods_desc)
-    values (#{id,jdbcType=VARCHAR},#{catId,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, #{goodsNum,jdbcType=VARCHAR},
+    insert into goods_sys (id,category_id, brand_name, goods_num,goods_name, specs, img_id, goods_desc)
+    values (#{id,jdbcType=VARCHAR},#{categoryId,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, #{goodsNum,jdbcType=VARCHAR},
       #{goodsName,jdbcType=VARCHAR}, #{specs,jdbcType=VARCHAR}, #{imgId,jdbcType=VARCHAR}, #{goodsDesc,jdbcType=VARCHAR})
   </insert>
 
@@ -60,8 +60,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.cyh.shop.bean.GoodsSysBean">
     update goods_sys
     <set>
-      <if test="catId != null">
-        cat_id = #{catId,jdbcType=VARCHAR},
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=VARCHAR},
       </if>
       <if test="brandName != null">
         brand_name = #{brandName,jdbcType=VARCHAR},
@@ -96,8 +96,9 @@
   <update id="updateByPrimaryKey" parameterType="com.cyh.shop.bean.GoodsSysBean">
     update goods_sys
     set
-      brand_name = #{brandName,jdbcType=VARCHAR},
       goods_name = #{goodsName,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=VARCHAR},
       specs = #{specs,jdbcType=VARCHAR},
       goods_desc = #{goodsDesc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}

@@ -18,7 +18,7 @@ public class GoodsSysBean implements Serializable {
     /**
      * 商品分类id
      */
-    private String catId;
+    private String categoryId;
 
     /**
      * 品牌名称
