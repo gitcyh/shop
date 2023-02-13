@@ -4,6 +4,7 @@ import com.cyh.shop.bean.GoodsSysBean;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface GoodsSysDao {
@@ -11,7 +12,7 @@ public interface GoodsSysDao {
 
     int insert(GoodsSysBean record);
 
-    List<GoodsSysBean> getGoodsList();
+    List<Map> getGoodsList();
 
     GoodsSysBean selectByPrimaryKey(String id);
 

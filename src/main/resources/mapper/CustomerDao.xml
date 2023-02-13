@@ -9,32 +9,36 @@
     <result column="settlement" jdbcType="TINYINT" property="settlement" />
     <result column="wechat" jdbcType="VARCHAR" property="wechat" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="data_flag" jdbcType="TINYINT" property="dataFlag" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, shop_id, `name`, address, settlement, wechat, phone, remark, create_time, update_time
+    id, shop_id, `name`, address, settlement, wechat, phone, data_flag, remark, create_time, 
+    update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from customer
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from customer
+    where data_flag = 1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from customer
+    update customer set data_flag = -1
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.CustomerBean" useGeneratedKeys="true">
-    insert into customer (shop_id, `name`, address, 
-      settlement, wechat, phone, 
-      remark, create_time, update_time
-      )
-    values (#{shopId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{settlement,jdbcType=TINYINT}, #{wechat,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+  <insert id="insert" parameterType="com.cyh.shop.bean.CustomerBean" >
+    insert into customer (id,shop_id, `name`, address,settlement, wechat, phone, remark)
+    values (#{id,jdbcType=VARCHAR},#{shopId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+            #{settlement,jdbcType=TINYINT}, #{wechat,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.CustomerBean" useGeneratedKeys="true">
     insert into customer
@@ -56,6 +60,9 @@
       </if>
       <if test="phone != null">
         phone,
+      </if>
+      <if test="dataFlag != null">
+        data_flag,
       </if>
       <if test="remark != null">
         remark,
@@ -85,6 +92,9 @@
       </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFlag != null">
+        #{dataFlag,jdbcType=TINYINT},
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
@@ -118,6 +128,9 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="dataFlag != null">
+        data_flag = #{dataFlag,jdbcType=TINYINT},
+      </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
@@ -132,15 +145,12 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cyh.shop.bean.CustomerBean">
     update customer
-    set shop_id = #{shopId,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      settlement = #{settlement,jdbcType=TINYINT},
-      wechat = #{wechat,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    set `name` = #{name,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        settlement = #{settlement,jdbcType=TINYINT},
+        wechat = #{wechat,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

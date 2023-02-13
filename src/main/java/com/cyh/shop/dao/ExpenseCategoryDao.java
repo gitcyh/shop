@@ -1,7 +1,11 @@
 package com.cyh.shop.dao;
 
 import com.cyh.shop.bean.ExpenseCategoryBean;
+import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
+@Mapper
 public interface ExpenseCategoryDao {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +18,6 @@ public interface ExpenseCategoryDao {
     int updateByPrimaryKeySelective(ExpenseCategoryBean record);
 
     int updateByPrimaryKey(ExpenseCategoryBean record);
+
+    List<ExpenseCategoryBean> selectAll();
 }

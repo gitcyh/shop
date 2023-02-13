@@ -25,9 +25,8 @@ public class BrandController {
         int result = brandService.insertSysBrand(brandSysBean);
         if(result > 0 ){
             return Result.success();
-        }else{
-            return Result.fail();
         }
+        return Result.fail();
     }
 
     @PostMapping("/sys/getBrandList")
@@ -41,9 +40,8 @@ public class BrandController {
         int result = brandService.updateSysBrand(brandSysBean);
         if(result > 0 ){
             return Result.success();
-        }else{
-            return Result.fail();
         }
+        return Result.fail();
     }
 
     @PostMapping("/sys/deleteBrand")
@@ -52,8 +50,7 @@ public class BrandController {
         int result = brandService.deleteSysBrand(id);
         if(result > 0 ){
             return Result.success();
-        }else{
-            return Result.fail();
         }
+        return Result.fail();
     }
 }

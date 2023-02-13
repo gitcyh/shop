@@ -25,19 +25,23 @@
     from staff
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from staff
+    where data_flag = 1
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from staff
+    update  staff set data_flag = -1
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.StaffBean" useGeneratedKeys="true">
-    insert into staff (shop_id, `name`, sex, 
-      age, phone, id_card, 
-      entry_date, address, data_flag, 
-      create_time, update_time)
-    values (#{shopId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
+  <insert id="insert" parameterType="com.cyh.shop.bean.StaffBean" >
+    insert into staff (id,shop_id, `name`, sex,  age, phone, id_card, entry_date, address)
+    values (#{id,jdbcType=VARCHAR},#{shopId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT},
       #{age,jdbcType=TINYINT}, #{phone,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, 
-      #{entryDate,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, #{dataFlag,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{entryDate,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.StaffBean" useGeneratedKeys="true">
     insert into staff
@@ -153,17 +157,13 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cyh.shop.bean.StaffBean">
     update staff
-    set shop_id = #{shopId,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
+    set  `name` = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=TINYINT},
       age = #{age,jdbcType=TINYINT},
       phone = #{phone,jdbcType=VARCHAR},
       id_card = #{idCard,jdbcType=VARCHAR},
       entry_date = #{entryDate,jdbcType=TIMESTAMP},
-      address = #{address,jdbcType=VARCHAR},
-      data_flag = #{dataFlag,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      address = #{address,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

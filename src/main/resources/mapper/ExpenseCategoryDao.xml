@@ -18,15 +18,21 @@
     from expense_category
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from expense_category
+    where data_flag = 1
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from expense_category
+    update  expense_category set data_flag = -1
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.ExpenseCategoryBean" useGeneratedKeys="true">
-    insert into expense_category (`name`, description, data_flag, 
-      create_time, update_time)
-    values (#{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{dataFlag,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  <insert id="insert"  parameterType="com.cyh.shop.bean.ExpenseCategoryBean">
+    insert into expense_category (id, `name`, description)
+    values (#{id,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.ExpenseCategoryBean" useGeneratedKeys="true">
     insert into expense_category
@@ -89,10 +95,7 @@
   <update id="updateByPrimaryKey" parameterType="com.cyh.shop.bean.ExpenseCategoryBean">
     update expense_category
     set `name` = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      data_flag = #{dataFlag,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

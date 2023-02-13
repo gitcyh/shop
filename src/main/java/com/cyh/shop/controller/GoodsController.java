@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class GoodsController {
@@ -31,7 +32,7 @@ public class GoodsController {
 
     @PostMapping("/sys/getGoodsList")
     public Object sys_getGoodsList(HttpServletRequest request){
-        List<GoodsSysBean> goodsSysBeans = goodsService.getSysGoodsList();
+        List<Map> goodsSysBeans = goodsService.getSysGoodsList();
         return Result.success().add("data",goodsSysBeans);
     }
 

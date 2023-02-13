@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GoodsService {
@@ -20,7 +21,7 @@ public class GoodsService {
         return  goodsSysDao.insert(goodsSysBean);
     }
 
-    public List<GoodsSysBean> getSysGoodsList(){
+    public List<Map> getSysGoodsList(){
         return goodsSysDao.getGoodsList();
     }
 

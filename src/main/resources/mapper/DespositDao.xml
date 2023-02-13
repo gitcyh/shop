@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.cyh.shop.bean.DespositBean">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="customer_id" jdbcType="VARCHAR" property="customerId" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="money" jdbcType="DECIMAL" property="money" />
     <result column="num" jdbcType="INTEGER" property="num" />
     <result column="file_id" jdbcType="VARCHAR" property="fileId" />
@@ -14,7 +15,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, customer_id, money, num, file_id, data_flag, `state`, remark, create_time, update_time
+    id, customer_id,description, money, num, file_id, data_flag, `state`, remark, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -22,19 +23,22 @@
     from desposit
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectAll"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from desposit
+    where data_flag = 1
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from desposit
+    update  desposit set data_flag = -1
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.DespositBean" useGeneratedKeys="true">
-    insert into desposit (customer_id, money, num, 
-      file_id, data_flag, `state`, 
-      remark, create_time, update_time
-      )
-    values (#{customerId,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{num,jdbcType=INTEGER}, 
-      #{fileId,jdbcType=VARCHAR}, #{dataFlag,jdbcType=TINYINT}, #{state,jdbcType=TINYINT}, 
-      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+  <insert id="insert" parameterType="com.cyh.shop.bean.DespositBean" >
+    insert into desposit (id,customer_id,description, money, num, file_id, `state`, remark)
+    values (#{id,jdbcType=VARCHAR},#{customerId,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{num,jdbcType=INTEGER},
+      #{fileId,jdbcType=VARCHAR},  #{state,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.DespositBean" useGeneratedKeys="true">
     insert into desposit
@@ -132,15 +136,13 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cyh.shop.bean.DespositBean">
     update desposit
-    set customer_id = #{customerId,jdbcType=VARCHAR},
-      money = #{money,jdbcType=DECIMAL},
+    set money = #{money,jdbcType=DECIMAL},
+      description = #{description,jdbcType=DECIMAL},
+      customer_id = #{customerId,jdbcType=DECIMAL},
       num = #{num,jdbcType=INTEGER},
       file_id = #{fileId,jdbcType=VARCHAR},
-      data_flag = #{dataFlag,jdbcType=TINYINT},
       `state` = #{state,jdbcType=TINYINT},
-      remark = #{remark,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

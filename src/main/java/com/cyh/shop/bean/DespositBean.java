@@ -22,6 +22,11 @@ public class DespositBean implements Serializable {
     private String customerId;
 
     /**
+     * 押金描述
+     */
+    private String description;
+
+    /**
      * 押金金额
      */
     private BigDecimal money;
