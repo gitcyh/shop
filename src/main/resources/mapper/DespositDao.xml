@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyh.shop.dao.DespositDao">
+  <resultMap id="BaseResultMap" type="com.cyh.shop.bean.DespositBean">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="customer_id" jdbcType="VARCHAR" property="customerId" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="file_id" jdbcType="VARCHAR" property="fileId" />
+    <result column="data_flag" jdbcType="TINYINT" property="dataFlag" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, customer_id, money, num, file_id, data_flag, `state`, remark, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from desposit
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from desposit
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.DespositBean" useGeneratedKeys="true">
+    insert into desposit (customer_id, money, num, 
+      file_id, data_flag, `state`, 
+      remark, create_time, update_time
+      )
+    values (#{customerId,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{num,jdbcType=INTEGER}, 
+      #{fileId,jdbcType=VARCHAR}, #{dataFlag,jdbcType=TINYINT}, #{state,jdbcType=TINYINT}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.DespositBean" useGeneratedKeys="true">
+    insert into desposit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="customerId != null">
+        customer_id,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="fileId != null">
+        file_id,
+      </if>
+      <if test="dataFlag != null">
+        data_flag,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="customerId != null">
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFlag != null">
+        #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cyh.shop.bean.DespositBean">
+    update desposit
+    <set>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="fileId != null">
+        file_id = #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFlag != null">
+        data_flag = #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cyh.shop.bean.DespositBean">
+    update desposit
+    set customer_id = #{customerId,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DECIMAL},
+      num = #{num,jdbcType=INTEGER},
+      file_id = #{fileId,jdbcType=VARCHAR},
+      data_flag = #{dataFlag,jdbcType=TINYINT},
+      `state` = #{state,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

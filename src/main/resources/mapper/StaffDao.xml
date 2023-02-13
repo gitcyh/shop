@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyh.shop.dao.StaffDao">
+  <resultMap id="BaseResultMap" type="com.cyh.shop.bean.StaffBean">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="shop_id" jdbcType="VARCHAR" property="shopId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="age" jdbcType="TINYINT" property="age" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="entry_date" jdbcType="TIMESTAMP" property="entryDate" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="data_flag" jdbcType="TINYINT" property="dataFlag" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shop_id, `name`, sex, age, phone, id_card, entry_date, address, data_flag, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from staff
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from staff
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.StaffBean" useGeneratedKeys="true">
+    insert into staff (shop_id, `name`, sex, 
+      age, phone, id_card, 
+      entry_date, address, data_flag, 
+      create_time, update_time)
+    values (#{shopId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
+      #{age,jdbcType=TINYINT}, #{phone,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, 
+      #{entryDate,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, #{dataFlag,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.StaffBean" useGeneratedKeys="true">
+    insert into staff
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="entryDate != null">
+        entry_date,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="dataFlag != null">
+        data_flag,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="entryDate != null">
+        #{entryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFlag != null">
+        #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cyh.shop.bean.StaffBean">
+    update staff
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="entryDate != null">
+        entry_date = #{entryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFlag != null">
+        data_flag = #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cyh.shop.bean.StaffBean">
+    update staff
+    set shop_id = #{shopId,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=TINYINT},
+      age = #{age,jdbcType=TINYINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      entry_date = #{entryDate,jdbcType=TIMESTAMP},
+      address = #{address,jdbcType=VARCHAR},
+      data_flag = #{dataFlag,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
