@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyh.shop.dao.ShopDao">
+  <resultMap id="BaseResultMap" type="com.cyh.shop.bean.ShopBean">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="shop_address" jdbcType="VARCHAR" property="shopAddress" />
+    <result column="shop_tel" jdbcType="VARCHAR" property="shopTel" />
+    <result column="shop_keeper" jdbcType="VARCHAR" property="shopKeeper" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="shop_company" jdbcType="VARCHAR" property="shopCompany" />
+    <result column="img_id" jdbcType="VARCHAR" property="imgId" />
+    <result column="license_id" jdbcType="VARCHAR" property="licenseId" />
+    <result column="apply_status" jdbcType="INTEGER" property="applyStatus" />
+    <result column="apply_desc" jdbcType="VARCHAR" property="applyDesc" />
+    <result column="longitude" jdbcType="DECIMAL" property="longitude" />
+    <result column="latitude" jdbcType="DECIMAL" property="latitude" />
+    <result column="start_time" jdbcType="TIME" property="startTime" />
+    <result column="end_time" jdbcType="TIME" property="endTime" />
+    <result column="shop_active" jdbcType="TINYINT" property="shopActive" />
+    <result column="data_flag" jdbcType="TINYINT" property="dataFlag" />
+    <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, shop_name, shop_address, shop_tel, shop_keeper, id_card, telephone, 
+    shop_company, img_id, license_id, apply_status, apply_desc, longitude, latitude, 
+    start_time, end_time, shop_active, data_flag, apply_time, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shop
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    update  shop set data_flag = -1
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cyh.shop.bean.ShopBean" >
+    insert into shop (id,user_id, shop_name, shop_address,
+      shop_tel, shop_keeper, id_card, 
+      telephone, shop_company, img_id, 
+      license_id,shop_active,
+      longitude, latitude, start_time, 
+      end_time,
+      apply_time
+      )
+    values (#{id,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{shopAddress,jdbcType=VARCHAR},
+      #{shopTel,jdbcType=VARCHAR}, #{shopKeeper,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{shopCompany,jdbcType=VARCHAR}, #{imgId,jdbcType=VARCHAR}, 
+      #{licenseId,jdbcType=VARCHAR},shop_active = #{shopActive,jdbcType=TINYINT},
+      #{longitude,jdbcType=DECIMAL}, #{latitude,jdbcType=DECIMAL}, #{startTime,jdbcType=TIME}, 
+      #{endTime,jdbcType=TIME},
+      #{applyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.ShopBean" useGeneratedKeys="true">
+    insert into shop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="shopName != null">
+        shop_name,
+      </if>
+      <if test="shopAddress != null">
+        shop_address,
+      </if>
+      <if test="shopTel != null">
+        shop_tel,
+      </if>
+      <if test="shopKeeper != null">
+        shop_keeper,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="shopCompany != null">
+        shop_company,
+      </if>
+      <if test="imgId != null">
+        img_id,
+      </if>
+      <if test="licenseId != null">
+        license_id,
+      </if>
+      <if test="applyStatus != null">
+        apply_status,
+      </if>
+      <if test="applyDesc != null">
+        apply_desc,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="shopActive != null">
+        shop_active,
+      </if>
+      <if test="dataFlag != null">
+        data_flag,
+      </if>
+      <if test="applyTime != null">
+        apply_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null">
+        #{shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shopTel != null">
+        #{shopTel,jdbcType=VARCHAR},
+      </if>
+      <if test="shopKeeper != null">
+        #{shopKeeper,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCompany != null">
+        #{shopCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="imgId != null">
+        #{imgId,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseId != null">
+        #{licenseId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyStatus != null">
+        #{applyStatus,jdbcType=INTEGER},
+      </if>
+      <if test="applyDesc != null">
+        #{applyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIME},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIME},
+      </if>
+      <if test="shopActive != null">
+        #{shopActive,jdbcType=TINYINT},
+      </if>
+      <if test="dataFlag != null">
+        #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="applyTime != null">
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cyh.shop.bean.ShopBean">
+    update shop
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null">
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null">
+        shop_address = #{shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shopTel != null">
+        shop_tel = #{shopTel,jdbcType=VARCHAR},
+      </if>
+      <if test="shopKeeper != null">
+        shop_keeper = #{shopKeeper,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCompany != null">
+        shop_company = #{shopCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="imgId != null">
+        img_id = #{imgId,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseId != null">
+        license_id = #{licenseId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyStatus != null">
+        apply_status = #{applyStatus,jdbcType=INTEGER},
+      </if>
+      <if test="applyDesc != null">
+        apply_desc = #{applyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=DECIMAL},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=DECIMAL},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIME},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIME},
+      </if>
+      <if test="shopActive != null">
+        shop_active = #{shopActive,jdbcType=TINYINT},
+      </if>
+      <if test="dataFlag != null">
+        data_flag = #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="applyTime != null">
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cyh.shop.bean.ShopBean">
+    update shop
+    set
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_address = #{shopAddress,jdbcType=VARCHAR},
+      shop_tel = #{shopTel,jdbcType=VARCHAR},
+      shop_keeper = #{shopKeeper,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      shop_company = #{shopCompany,jdbcType=VARCHAR},
+      img_id = #{imgId,jdbcType=VARCHAR},
+      license_id = #{licenseId,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=DECIMAL},
+      latitude = #{latitude,jdbcType=DECIMAL},
+      start_time = #{startTime,jdbcType=TIME},
+      end_time = #{endTime,jdbcType=TIME},
+      shop_active = #{shopActive,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="checkShop">
+    update shop
+    set
+      apply_status = #{applyStatus},
+      apply_desc = #{applyDesc}
+    where id = #{id}
+  </update>
+</mapper>
