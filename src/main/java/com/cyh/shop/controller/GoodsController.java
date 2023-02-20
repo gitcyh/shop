@@ -1,6 +1,8 @@
 package com.cyh.shop.controller;
 
-import com.cyh.shop.bean.GoodsSysBean;
+
+import com.alibaba.fastjson.JSONObject;
+import com.cyh.shop.bean.GoodsBean;
 import com.cyh.shop.service.GoodsService;
 import com.cyh.shop.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +21,9 @@ public class GoodsController {
     @Autowired
     private GoodsService goodsService;
 
-    @PostMapping("/sys/addGoods")
-    public Object sys_addGoods(@RequestBody GoodsSysBean goodsSysBean){
-        int result = goodsService.addSysGoods(goodsSysBean);
+    @PostMapping("/addGoods")
+    public Object addGoods(@RequestBody GoodsBean goodsBean){
+        int result = goodsService.addGoods(goodsBean);
         if(result > 0 ){
             return Result.success();
         }else{
@@ -30,26 +31,27 @@ public class GoodsController {
         }
     }
 
-    @PostMapping("/sys/getGoodsList")
-    public Object sys_getGoodsList(HttpServletRequest request){
-        List<Map> goodsSysBeans = goodsService.getSysGoodsList();
-        return Result.success().add("data",goodsSysBeans);
+    @PostMapping("/getGoodsList")
+    public Object getGoodsList(@RequestBody JSONObject jsonObject){
+        String shopId = jsonObject.getString("shopId");
+        List<Map> goodsBeans = goodsService.getGoodsList(shopId);
+        return Result.success().add("data",goodsBeans);
     }
 
-    @GetMapping("/sys/getGoods")
-    public Object sys_getGoods(HttpServletRequest request){
+    @GetMapping("/getGoods")
+    public Object getGoods(HttpServletRequest request){
         String id = request.getParameter("id");
-        GoodsSysBean goodsSysBean = goodsService.getSysGoodsById(id);
-        if(goodsSysBean == null){
+        GoodsBean goodsBean = goodsService.getGoodsById(id);
+        if(goodsBean == null){
             return Result.fail();
         }else {
-            return Result.success().add("data", goodsSysBean);
+            return Result.success().add("data", goodsBean);
         }
     }
 
-    @PostMapping("/sys/updateGoods")
-    public Object sys_updateGoods(@RequestBody GoodsSysBean goodsSysBean){
-        int result = goodsService.updateSysGoods((goodsSysBean));
+    @PostMapping("/updateGoods")
+    public Object updateGoods(@RequestBody GoodsBean goodsBean){
+        int result = goodsService.updateGoods(goodsBean);
         if(result > 0 ){
             return Result.success();
         }else{
@@ -57,10 +59,10 @@ public class GoodsController {
         }
     }
 
-    @GetMapping("/sys/deleteGoods")
-    public Object sys_deleteGoods(HttpServletRequest request){
+    @GetMapping("/deleteGoods")
+    public Object deleteGoods(HttpServletRequest request){
         String id = request.getParameter("id");
-        int result = goodsService.deleteSysGoods(id);
+        int result = goodsService.deleteGoods(id);
         if(result > 0 ){
             return Result.success();
         }else{
@@ -68,9 +70,21 @@ public class GoodsController {
         }
     }
 
-    @PostMapping("/sys/searchGoods")
-    public Object sys_searchGoods(@RequestBody GoodsSysBean goodsSysBean){
-        int result = goodsService.updateSysGoods((goodsSysBean));
+    @PostMapping("/searchGoods")
+    public Object searchGoods(@RequestBody GoodsBean goodsBean){
+        int result = goodsService.updateGoods(goodsBean);
+        if(result > 0 ){
+            return Result.success();
+        }else{
+            return Result.fail();
+        }
+    }
+
+    @PostMapping("/handleShelf")
+    public Object handleShelf(@RequestBody JSONObject jsonObject){
+        String id = jsonObject.getString("id");
+        Integer isSale = jsonObject.getInteger("isSale");
+        int result = goodsService.handleShelfGoods(id,isSale);
         if(result > 0 ){
             return Result.success();
         }else{

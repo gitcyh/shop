@@ -15,7 +15,6 @@ public class StaffService {
     private StaffDao staffDao;
 
     public int addStaff(StaffBean staffBean){
-        staffBean.setShopId(UUIDUtil.generateId());
         staffBean.setId(UUIDUtil.generateId());
         return staffDao.insert(staffBean);
     }
@@ -28,8 +27,8 @@ public class StaffService {
         return staffDao.updateByPrimaryKey(staffBean);
     }
 
-    public List<StaffBean> getStaffs (){
-        return staffDao.selectAll();
+    public List<StaffBean> getStaffs (String shopId){
+        return staffDao.selectAll(shopId);
     }
 
     public int deleteStaff(String id){

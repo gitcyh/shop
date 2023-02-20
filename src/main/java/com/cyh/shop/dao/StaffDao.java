@@ -19,5 +19,5 @@ public interface StaffDao {
 
     int updateByPrimaryKey(StaffBean record);
 
-    List<StaffBean> selectAll();
+    List<StaffBean> selectAll(String shopId);
 }

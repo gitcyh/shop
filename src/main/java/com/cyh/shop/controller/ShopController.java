@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cyh.shop.bean.ShopBean;
 import com.cyh.shop.service.ShopService;
 import com.cyh.shop.util.Result;
+import com.cyh.shop.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,9 +53,11 @@ public class ShopController {
 
     @PostMapping("/addShop")
     public Object addShop(@RequestBody ShopBean shopBean){
+        String id = UUIDUtil.generateId();
+        shopBean.setId(id);
         int result = shopService.addShop(shopBean);
         if(result > 0){
-            return Result.success();
+            return Result.success().add("shopId",id);
         }
         return  Result.fail();
     }

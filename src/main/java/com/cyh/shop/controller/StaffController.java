@@ -1,5 +1,6 @@
 package com.cyh.shop.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cyh.shop.bean.StaffBean;
 import com.cyh.shop.service.StaffService;
 import com.cyh.shop.util.Result;
@@ -47,8 +48,9 @@ public class StaffController {
     }
 
     @PostMapping("/getStaffs")
-    public Object getStaffs(){
-        List<StaffBean> list = staffService.getStaffs();
+    public Object getStaffs(@RequestBody JSONObject jsonObject){
+        String shopId = jsonObject.getString("shopId");
+        List<StaffBean> list = staffService.getStaffs(shopId);
         return Result.success().add("data",list);
     }
 

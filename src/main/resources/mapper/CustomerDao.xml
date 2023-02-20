@@ -29,7 +29,7 @@
     select
     <include refid="Base_Column_List" />
     from customer
-    where data_flag = 1
+    where data_flag = 1 and shop_id = #{shopId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     update customer set data_flag = -1

@@ -19,5 +19,5 @@ public interface CustomerDao {
 
     int updateByPrimaryKey(CustomerBean record);
 
-    List<CustomerBean> selectAll();
+    List<CustomerBean> selectAll(String shopId);
 }

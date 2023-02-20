@@ -15,7 +15,6 @@ public class ShopService {
     private ShopDao shopDao;
 
     public int addShop(ShopBean shopBean){
-        shopBean.setId(UUIDUtil.generateId());
         return shopDao.insert(shopBean);
     }
 

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyh.shop.dao.GoodsDao">
+  <resultMap id="BaseResultMap" type="com.cyh.shop.bean.GoodsBean">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+    <result column="shop_id" jdbcType="VARCHAR" property="shopId" />
+    <result column="goods_num" jdbcType="VARCHAR" property="goodsNum" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+    <result column="specs" jdbcType="VARCHAR" property="specs" />
+    <result column="img_id" jdbcType="VARCHAR" property="imgId" />
+    <result column="goods_desc" jdbcType="VARCHAR" property="goodsDesc" />
+    <result column="allowance" jdbcType="INTEGER" property="allowance" />
+    <result column="goods_status" jdbcType="TINYINT" property="goodsStatus" />
+    <result column="apply_desc" jdbcType="VARCHAR" property="applyDesc" />
+    <result column="cost_price" jdbcType="DECIMAL" property="costPrice" />
+    <result column="delivery_price" jdbcType="DECIMAL" property="deliveryPrice" />
+    <result column="self_price" jdbcType="DECIMAL" property="selfPrice" />
+    <result column="is_sale" jdbcType="TINYINT" property="isSale" />
+    <result column="is_best" jdbcType="TINYINT" property="isBest" />
+    <result column="is_hot" jdbcType="TINYINT" property="isHot" />
+    <result column="is_new" jdbcType="TINYINT" property="isNew" />
+    <result column="is_recom" jdbcType="TINYINT" property="isRecom" />
+    <result column="data_flag" jdbcType="TINYINT" property="dataFlag" />
+    <result column="sale_time" jdbcType="TIMESTAMP" property="saleTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, category_id, shop_id, goods_num, goods_name, brand_name, specs, img_id, goods_desc, 
+    allowance, goods_status, apply_desc, cost_price, delivery_price, self_price,
+   is_sale, is_best, is_hot, is_new, is_recom, data_flag, sale_time, create_time,
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getGoodsList" parameterType="java.lang.String" resultType="java.util.HashMap">
+    select a.id, a.category_id as categoryId, a.brand_name as brandName,  a.goods_name as goodsName,
+           a.cost_price as costPrice,a.delivery_price as deliveryPrice,a.self_price as selfPrice,a.is_sale as isSale,
+           a.specs, a.img_id as imgId, a.goods_desc as goodsDesc,a.goods_status as goodsStatus, a.apply_desc as applyDesc,
+           a.create_time as createTime, b.name as categoryName from goods a
+         INNER JOIN category b on a.shop_id = #{shopId,jdbcType=VARCHAR} and  a.category_id = b.id and a.data_flag = 1
+  </select>
+
+  <insert id="searchGoods" parameterType="com.cyh.shop.bean.GoodsBean">
+    select <include refid="Base_Column_List" /> from goods
+    where
+    <if test="brandName != null">
+      brand_name like "%"#{brandName,jdbcType=VARCHAR}"%"
+    </if>
+    <if test="goodsName != null">
+      and goods_name like "%"#{goodsName,jdbcType=VARCHAR}"%",
+    </if>
+    <if test="specs != null">
+      and specs liek "%"#{specs,jdbcType=VARCHAR}"%",
+    </if>
+  </insert>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from goods
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert"  parameterType="com.cyh.shop.bean.GoodsBean">
+    insert into goods (id,category_id, shop_id, goods_num,
+      goods_name, brand_name, specs, 
+      img_id, goods_desc, cost_price,
+      delivery_price, self_price)
+    values (#{id,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR}, #{shopId,jdbcType=VARCHAR}, #{goodsNum,jdbcType=VARCHAR},
+      #{goodsName,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, #{specs,jdbcType=VARCHAR}, 
+      #{imgId,jdbcType=VARCHAR}, #{goodsDesc,jdbcType=VARCHAR}, #{costPrice,jdbcType=DECIMAL},
+      #{deliveryPrice,jdbcType=DECIMAL}, #{selfPrice,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.GoodsBean" useGeneratedKeys="true">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="goodsNum != null">
+        goods_num,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="brandName != null">
+        brand_name,
+      </if>
+      <if test="specs != null">
+        specs,
+      </if>
+      <if test="imgId != null">
+        img_id,
+      </if>
+      <if test="goodsDesc != null">
+        goods_desc,
+      </if>
+      <if test="allowance != null">
+        allowance,
+      </if>
+      <if test="goodsStatus != null">
+        goods_status,
+      </if>
+      <if test="applyDesc != null">
+        apply_desc,
+      </if>
+      <if test="costPrice != null">
+        cost_price,
+      </if>
+      <if test="deliveryPrice != null">
+        delivery_price,
+      </if>
+      <if test="selfPrice != null">
+        self_price,
+      </if>
+      <if test="waterPrice != null">
+        water_price,
+      </if>
+      <if test="monthlyRice != null">
+        monthly_rice,
+      </if>
+      <if test="isSale != null">
+        is_sale,
+      </if>
+      <if test="isBest != null">
+        is_best,
+      </if>
+      <if test="isHot != null">
+        is_hot,
+      </if>
+      <if test="isNew != null">
+        is_new,
+      </if>
+      <if test="isRecom != null">
+        is_recom,
+      </if>
+      <if test="dataFlag != null">
+        data_flag,
+      </if>
+      <if test="saleTime != null">
+        sale_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null">
+        #{goodsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null">
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="specs != null">
+        #{specs,jdbcType=VARCHAR},
+      </if>
+      <if test="imgId != null">
+        #{imgId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDesc != null">
+        #{goodsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="allowance != null">
+        #{allowance,jdbcType=INTEGER},
+      </if>
+      <if test="goodsStatus != null">
+        #{goodsStatus,jdbcType=TINYINT},
+      </if>
+      <if test="applyDesc != null">
+        #{applyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null">
+        #{costPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryPrice != null">
+        #{deliveryPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="selfPrice != null">
+        #{selfPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isSale != null">
+        #{isSale,jdbcType=TINYINT},
+      </if>
+      <if test="isBest != null">
+        #{isBest,jdbcType=TINYINT},
+      </if>
+      <if test="isHot != null">
+        #{isHot,jdbcType=TINYINT},
+      </if>
+      <if test="isNew != null">
+        #{isNew,jdbcType=TINYINT},
+      </if>
+      <if test="isRecom != null">
+        #{isRecom,jdbcType=TINYINT},
+      </if>
+      <if test="dataFlag != null">
+        #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="saleTime != null">
+        #{saleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cyh.shop.bean.GoodsBean">
+    update goods
+    <set>
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null">
+        goods_num = #{goodsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null">
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="specs != null">
+        specs = #{specs,jdbcType=VARCHAR},
+      </if>
+      <if test="imgId != null">
+        img_id = #{imgId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDesc != null">
+        goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="allowance != null">
+        allowance = #{allowance,jdbcType=INTEGER},
+      </if>
+      <if test="goodsStatus != null">
+        goods_status = #{goodsStatus,jdbcType=TINYINT},
+      </if>
+      <if test="applyDesc != null">
+        apply_desc = #{applyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null">
+        cost_price = #{costPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryPrice != null">
+        delivery_price = #{deliveryPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="selfPrice != null">
+        self_price = #{selfPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isSale != null">
+        is_sale = #{isSale,jdbcType=TINYINT},
+      </if>
+      <if test="isBest != null">
+        is_best = #{isBest,jdbcType=TINYINT},
+      </if>
+      <if test="isHot != null">
+        is_hot = #{isHot,jdbcType=TINYINT},
+      </if>
+      <if test="isNew != null">
+        is_new = #{isNew,jdbcType=TINYINT},
+      </if>
+      <if test="isRecom != null">
+        is_recom = #{isRecom,jdbcType=TINYINT},
+      </if>
+      <if test="dataFlag != null">
+        data_flag = #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="saleTime != null">
+        sale_time = #{saleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cyh.shop.bean.GoodsBean">
+    update goods
+    set category_id = #{categoryId,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      specs = #{specs,jdbcType=VARCHAR},
+      img_id = #{imgId,jdbcType=VARCHAR},
+      goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      cost_price = #{costPrice,jdbcType=DECIMAL},
+      delivery_price = #{deliveryPrice,jdbcType=DECIMAL},
+      self_price = #{selfPrice,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="handleShelfGoods" >
+    update goods
+    set is_sale = #{isSale,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

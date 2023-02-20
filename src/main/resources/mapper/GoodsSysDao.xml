@@ -27,7 +27,7 @@
 
   <select id="getGoodsList" resultType="java.util.HashMap">
     select a.id, a.category_id as categoryId, a.brand_name as brandName,  a.goods_name as goodsName, a.specs, a.img_id, a.goods_desc as goodsDesc,
-           a.create_time as createTime, b.name as categoryName from goods_sys a
+           a.img_id as imgId, a.create_time as createTime, b.name as categoryName from goods_sys a
     INNER JOIN category b on  a.category_id = b.id and a.data_flag = 1
   </select>
 
@@ -100,6 +100,7 @@
       goods_name = #{goodsName,jdbcType=VARCHAR},
       brand_name = #{brandName,jdbcType=VARCHAR},
       category_id = #{categoryId,jdbcType=VARCHAR},
+      img_id = #{imgId,jdbcType=VARCHAR},
       specs = #{specs,jdbcType=VARCHAR},
       goods_desc = #{goodsDesc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}

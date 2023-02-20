@@ -17,7 +17,6 @@ public class CustomerService {
 
 
     public int addCustomer(CustomerBean customerBean){
-        customerBean.setShopId(UUIDUtil.generateId());
         customerBean.setId(UUIDUtil.generateId());
         return customerDao.insert(customerBean);
     }
@@ -30,8 +29,8 @@ public class CustomerService {
         return customerDao.updateByPrimaryKey(customerBean);
     }
 
-    public List<CustomerBean> getCustomers (){
-        return customerDao.selectAll();
+    public List<CustomerBean> getCustomers (String shopId){
+        return customerDao.selectAll(shopId);
     }
 
     public int deleteCustomer(String id){

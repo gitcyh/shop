@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyh.shop.dao.OrderSysDao">
+  <resultMap id="BaseResultMap" type="com.cyh.shop.bean.OrderSysBean">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="shop_id" jdbcType="VARCHAR" property="shopId" />
+    <result column="goods_id" jdbcType="VARCHAR" property="goodsId" />
+    <result column="customer_id" jdbcType="VARCHAR" property="customerId" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="customer_phone" jdbcType="VARCHAR" property="customerPhone" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="send_state" jdbcType="TINYINT" property="sendState" />
+    <result column="payway" jdbcType="TINYINT" property="payway" />
+    <result column="sender_id" jdbcType="VARCHAR" property="senderId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="bgcolor" jdbcType="VARCHAR" property="bgcolor" />
+    <result column="data_flag" jdbcType="TINYINT" property="dataFlag" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_num, user_id, shop_id, goods_id, customer_id, address, customer_name, customer_phone, 
+    price, num, send_state, payway, sender_id, remark, bgcolor, data_flag, order_time, create_time,
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT
+      o.id,
+      order_num AS orderNum,
+      user_id AS userId,
+      o.shop_id AS shopId,
+      goods_id AS goodsId,
+      customer_id AS customerId,
+      o.address,
+      customer_name AS customerName,
+      customer_phone AS customerPhone,
+      price,
+      num,
+      send_state AS sendState,
+      payway,
+      sender_id as senderId,
+      remark,
+      bgcolor,
+      order_time AS orderTime,
+      goods_name AS goodsName,
+      specs
+    FROM
+      order_sys AS o
+        INNER JOIN goods g ON  o.id= #{id,jdbcType=VARCHAR} and o.goods_id = g.id
+  </select>
+  <update id="updateInfo">
+    update order_sys
+    set
+      bgcolor = #{bgcolor,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getOrders"  parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT
+      o.id,
+      order_num AS orderNum,
+      user_id AS userId,
+      o.shop_id AS shopId,
+      goods_id AS goodsId,
+      customer_id AS customerId,
+      o.address,
+      customer_name AS customerName,
+      customer_phone AS customerPhone,
+      price,
+      num,
+      send_state AS sendState,
+      payway,
+      sender_id as senderId,
+      remark,
+      bgcolor,
+      order_time AS orderTime,
+      goods_name AS goodsName,
+      specs,
+      s.name as senderName
+    FROM
+      order_sys AS o
+        INNER JOIN goods g ON o.goods_id = g.id and g.data_flag = 1 and g.shop_id = #{shopId,jdbcType=VARCHAR}
+        INNER JOIN staff s on o.sender_id = s.id
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order_sys
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cyh.shop.bean.OrderSysBean">
+    insert into order_sys (id, order_num, user_id, 
+      shop_id, goods_id, customer_id, 
+      address, customer_name, customer_phone, 
+      price, num, send_state, 
+      payway, sender_id, remark, order_time)
+    values (#{id,jdbcType=VARCHAR}, #{orderNum,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{shopId,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{customerPhone,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{num,jdbcType=INTEGER}, #{sendState,jdbcType=TINYINT}, 
+      #{payway,jdbcType=TINYINT}, #{senderId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},  #{orderTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cyh.shop.bean.OrderSysBean">
+    insert into order_sys
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="customerId != null">
+        customer_id,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="customerName != null">
+        customer_name,
+      </if>
+      <if test="customerPhone != null">
+        customer_phone,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="sendState != null">
+        send_state,
+      </if>
+      <if test="payway != null">
+        payway,
+      </if>
+      <if test="senderId != null">
+        senderId,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="bgcolor != null">
+        bgcolor,
+      </if>
+      <if test="dataFlag != null">
+        data_flag,
+      </if>
+      <if test="orderTime != null">
+        order_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null">
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null">
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null">
+        #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="sendState != null">
+        #{sendState,jdbcType=TINYINT},
+      </if>
+      <if test="payway != null">
+        #{payway,jdbcType=TINYINT},
+      </if>
+      <if test="senderId != null">
+        #{senderId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="bgcolor != null">
+        #{bgcolor,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFlag != null">
+        #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="orderTime != null">
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cyh.shop.bean.OrderSysBean">
+    update order_sys
+    <set>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null">
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null">
+        customer_phone = #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="sendState != null">
+        send_state = #{sendState,jdbcType=TINYINT},
+      </if>
+      <if test="payway != null">
+        payway = #{payway,jdbcType=TINYINT},
+      </if>
+      <if test="senderId != null">
+        sender_id = #{senderId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="bgcolor != null">
+        bgcolor = #{bgcolor,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFlag != null">
+        data_flag = #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="orderTime != null">
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cyh.shop.bean.OrderSysBean">
+    update order_sys
+    set
+      goods_id = #{goodsId,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_phone = #{customerPhone,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      num = #{num,jdbcType=INTEGER},
+      send_state = #{sendState,jdbcType=TINYINT},
+      payway = #{payway,jdbcType=TINYINT},
+      sender_id = #{senderId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      order_time = #{orderTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
