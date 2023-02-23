@@ -16,7 +16,7 @@ public interface PayoutDao {
 
     int updateByPrimaryKey(PayoutBean record);
 
-    List<Map> getPayoutList();
+    List<Map> getPayoutList(String shopId,String type,String date);
 
     List<Map> selectPayoutList(String shopId);
 }

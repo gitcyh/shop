@@ -36,6 +36,7 @@ public class JWTUtil {
                  .withClaim("username",userBean.getUsername())
                  .withClaim("pictureId",userBean.getPictureId())
                  .withClaim("userid",userBean.getId())
+                 .withClaim("role",userBean.getRole())
                  .withExpiresAt(DateUtil.offsetHour(new Date(),24)) //24小时后token过期
                  .sign(Algorithm.HMAC256(signature));
     }

@@ -56,8 +56,11 @@ public class PayoutController {
     }
 
     @PostMapping("/getPayouts")
-    public Object getPayouts(){
-        List<Map> payoutBeans = payoutService.getPayoutList();
+    public Object getPayouts(@RequestBody JSONObject jsonObject){
+        String shopId = jsonObject.getString("shopId");
+        String type = jsonObject.getString("type");
+        String date = jsonObject.getString("date");
+        List<Map> payoutBeans = payoutService.getPayoutList(shopId, type, date);
         if(payoutBeans.size() > 0){
             return Result.success().add("data",payoutBeans);
         }

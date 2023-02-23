@@ -29,7 +29,8 @@ public class UserController {
             return Result.success().add("token",token)
                     .add("username",user.getUsername())
                     .add("userid",user.getId())
-                    .add("pictureId",user.getPictureId());
+                    .add("pictureId",user.getPictureId())
+                    .add("role",user.getRole());
         }else {
             return Result.fail();
         }
@@ -61,14 +62,15 @@ public class UserController {
 
     @PostMapping("/getUserInfo")
     public Object getUserInfo(@RequestBody JSONObject object){
-        String username = object.getString("username");
-        UserBean user = userService.selectUserByUserName(username);
+        String userid = object.getString("userid");
+        UserBean user = userService.selectUserById(userid);
         if(user != null){
             return Result.success()
                     .add("userid",user.getId())
                     .add("username",user.getUsername())
                     .add("phone",user.getPhone())
                     .add("email",user.getEmail())
+                    .add("role",user.getRole())
                     .add("pictureId",user.getPictureId());
         }else {
             return Result.fail();

@@ -32,8 +32,8 @@ public class PayoutService {
         return payoutDao.selectByPrimaryKey(id);
     }
 
-    public List<Map> getPayoutList(){
-        return payoutDao.getPayoutList();
+    public List<Map> getPayoutList(String shopId,String type,String date){
+        return payoutDao.getPayoutList(shopId, type, date);
     }
 
     public List<Map> getPayoutChart(String shopId){

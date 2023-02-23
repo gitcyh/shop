@@ -22,10 +22,19 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
-  <select id="getPayoutList" resultType="java.util.HashMap">
+  <select id="getPayoutList" parameterType="java.lang.String" resultType="java.util.HashMap">
     select a.id, a.category_id as categoryId, a.name,  a.amount, a.remark,a.date,
            a.create_time as createTime, b.name as categoryName from payout a
-           INNER JOIN expense_category b on  a.category_id = b.id
+           INNER JOIN expense_category b on  a.category_id = b.id and a.shop_id = #{shopId,jdbcType=VARCHAR}
+          <if test="type == 'date'">
+            and DATE_FORMAT(a.date,'%Y-%m-%d') = #{date,jdbcType=VARCHAR}
+          </if>
+          <if test="type == 'month'">
+            and DATE_FORMAT(a.date,'%Y-%m') = #{date,jdbcType=VARCHAR}
+          </if>
+          <if test="type == 'year'">
+            and DATE_FORMAT(a.date,'%Y') = #{date,jdbcType=VARCHAR}
+          </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from payout
