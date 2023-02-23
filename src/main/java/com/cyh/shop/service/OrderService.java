@@ -33,12 +33,12 @@ public class OrderService {
         return orderSysDao.selectByPrimaryKey(id);
     }
 
-    public List<Map> getOrders(String shopId){
-        return orderSysDao.getOrders(shopId);
+    public List<Map> getOrders(String shopId,String type,String date){
+        return orderSysDao.getOrders(shopId,type,date);
     }
 
-    public int updateInfo(String bgcolor){
-        return orderSysDao.updateInfo(bgcolor);
+    public int updateInfo(String id,String style){
+        return orderSysDao.updateInfo(id,style);
     }
 
 }

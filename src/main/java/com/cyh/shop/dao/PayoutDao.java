@@ -12,13 +12,11 @@ public interface PayoutDao {
 
     int insert(PayoutBean record);
 
-    int insertSelective(PayoutBean record);
-
     PayoutBean selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(PayoutBean record);
 
     int updateByPrimaryKey(PayoutBean record);
 
     List<Map> getPayoutList();
+
+    List<Map> selectPayoutList(String shopId);
 }

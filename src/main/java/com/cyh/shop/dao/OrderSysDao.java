@@ -20,7 +20,7 @@ public interface OrderSysDao {
 
     int updateByPrimaryKey(OrderSysBean record);
 
-    List<Map> getOrders(String shopId);
+    List<Map> getOrders(String shopId,String type,String date);
 
-    int updateInfo(String bgcolor);
+    int updateInfo(String id,String style);
 }

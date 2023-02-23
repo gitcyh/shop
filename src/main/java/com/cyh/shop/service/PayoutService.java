@@ -35,4 +35,8 @@ public class PayoutService {
     public List<Map> getPayoutList(){
         return payoutDao.getPayoutList();
     }
+
+    public List<Map> getPayoutChart(String shopId){
+        return payoutDao.selectPayoutList(shopId);
+    }
 }

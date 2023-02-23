@@ -17,7 +17,7 @@
     <result column="payway" jdbcType="TINYINT" property="payway" />
     <result column="sender_id" jdbcType="VARCHAR" property="senderId" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="bgcolor" jdbcType="VARCHAR" property="bgcolor" />
+    <result column="style" jdbcType="VARCHAR" property="style" />
     <result column="data_flag" jdbcType="TINYINT" property="dataFlag" />
     <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -25,7 +25,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, order_num, user_id, shop_id, goods_id, customer_id, address, customer_name, customer_phone, 
-    price, num, send_state, payway, sender_id, remark, bgcolor, data_flag, order_time, create_time,
+    price, num, send_state, payway, sender_id, remark, style, data_flag, order_time, create_time,
     update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="java.util.Map">
@@ -45,7 +45,7 @@
       payway,
       sender_id as senderId,
       remark,
-      bgcolor,
+      style,
       order_time AS orderTime,
       goods_name AS goodsName,
       specs
@@ -53,10 +53,10 @@
       order_sys AS o
         INNER JOIN goods g ON  o.id= #{id,jdbcType=VARCHAR} and o.goods_id = g.id
   </select>
-  <update id="updateInfo">
+  <update id="updateInfo" parameterType="java.lang.String">
     update order_sys
     set
-      bgcolor = #{bgcolor,jdbcType=VARCHAR}
+      style = #{style,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="getOrders"  parameterType="java.lang.String" resultType="java.util.Map">
@@ -76,7 +76,7 @@
       payway,
       sender_id as senderId,
       remark,
-      bgcolor,
+      style,
       order_time AS orderTime,
       goods_name AS goodsName,
       specs,
@@ -84,6 +84,12 @@
     FROM
       order_sys AS o
         INNER JOIN goods g ON o.goods_id = g.id and g.data_flag = 1 and g.shop_id = #{shopId,jdbcType=VARCHAR}
+        <if test="type == 'date'">
+          and DATE_FORMAT(o.order_time,'%Y-%m-%d') = #{date,jdbcType=VARCHAR}
+        </if>
+        <if test="type == 'month'">
+          and DATE_FORMAT(o.order_time,'%Y-%m') = #{date,jdbcType=VARCHAR}
+        </if>
         INNER JOIN staff s on o.sender_id = s.id
   </select>
 
@@ -95,13 +101,13 @@
     insert into order_sys (id, order_num, user_id, 
       shop_id, goods_id, customer_id, 
       address, customer_name, customer_phone, 
-      price, num, send_state, 
+      price, num, send_state, style,
       payway, sender_id, remark, order_time)
     values (#{id,jdbcType=VARCHAR}, #{orderNum,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
       #{shopId,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR},
       #{address,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{customerPhone,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL}, #{num,jdbcType=INTEGER}, #{sendState,jdbcType=TINYINT}, 
-      #{payway,jdbcType=TINYINT}, #{senderId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},  #{orderTime,jdbcType=TIMESTAMP})
+      #{price,jdbcType=DECIMAL}, #{num,jdbcType=INTEGER}, #{sendState,jdbcType=TINYINT}, #{style,jdbcType=TINYINT},
+            #{payway,jdbcType=TINYINT}, #{senderId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},  #{orderTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.cyh.shop.bean.OrderSysBean">
     insert into order_sys
@@ -151,8 +157,8 @@
       <if test="remark != null">
         remark,
       </if>
-      <if test="bgcolor != null">
-        bgcolor,
+      <if test="style != null">
+        style,
       </if>
       <if test="dataFlag != null">
         data_flag,
@@ -213,8 +219,8 @@
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="bgcolor != null">
-        #{bgcolor,jdbcType=VARCHAR},
+      <if test="style != null">
+        #{style,jdbcType=VARCHAR},
       </if>
       <if test="dataFlag != null">
         #{dataFlag,jdbcType=TINYINT},
@@ -275,8 +281,8 @@
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="bgcolor != null">
-        bgcolor = #{bgcolor,jdbcType=VARCHAR},
+      <if test="style != null">
+        style = #{style,jdbcType=VARCHAR},
       </if>
       <if test="dataFlag != null">
         data_flag = #{dataFlag,jdbcType=TINYINT},

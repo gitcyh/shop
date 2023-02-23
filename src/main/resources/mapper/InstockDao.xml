@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyh.shop.dao.InstockDao">
+  <resultMap id="BaseResultMap" type="com.cyh.shop.bean.InstockBean">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="shop_id" jdbcType="VARCHAR" property="shopId" />
+    <result column="goods_id" jdbcType="VARCHAR" property="goodsId" />
+    <result column="img_id" jdbcType="VARCHAR" property="imgId" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="bucket" jdbcType="INTEGER" property="bucket" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="data_flag" jdbcType="TINYINT" property="dataFlag" />
+    <result column="instock_time" jdbcType="TIMESTAMP" property="instockTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shop_id, goods_id,img_id, price, num, bucket, money, remark, data_flag, instock_time,
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from instock
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getInstocks"  parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT i.id, i.shop_id as shopId, i.goods_id as goodsId,i.img_id as imgId, i.price, i.num, i.bucket,
+           i.money, i.remark, i.instock_time as instockTime, g.goods_name as goodsName,g.brand_name as brandName,
+           g.specs from instock i  INNER JOIN goods g on i.data_flag = 1 and i.goods_id = g.id and i.shop_id = #{shopId,jdbcType=VARCHAR}
+    <if test="type == 'date'">
+      and DATE_FORMAT(i.instock_time,'%Y-%m-%d') = #{date,jdbcType=VARCHAR}
+    </if>
+    <if test="type == 'month'">
+      and DATE_FORMAT(i.instock_time,'%Y-%m') = #{date,jdbcType=VARCHAR}
+    </if>
+    <if test="type == 'year'">
+      and DATE_FORMAT(i.instock_time,'%Y') = #{date,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    update instock set data_flag = -1
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cyh.shop.bean.InstockBean" >
+    insert into instock (id,shop_id, goods_id, price,
+      num, bucket, money, img_id,
+      remark, instock_time)
+    values (#{id,jdbcType=VARCHAR},#{shopId,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
+      #{num,jdbcType=INTEGER}, #{bucket,jdbcType=INTEGER}, #{money,jdbcType=DECIMAL},  #{imgId,jdbcType=VARCHAR},
+            #{remark,jdbcType=VARCHAR}, #{instockTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cyh.shop.bean.InstockBean" useGeneratedKeys="true">
+    insert into instock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="bucket != null">
+        bucket,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="dataFlag != null">
+        data_flag,
+      </if>
+      <if test="instockTime != null">
+        instock_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="bucket != null">
+        #{bucket,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFlag != null">
+        #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="instockTime != null">
+        #{instockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cyh.shop.bean.InstockBean">
+    update instock
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="bucket != null">
+        bucket = #{bucket,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="dataFlag != null">
+        data_flag = #{dataFlag,jdbcType=TINYINT},
+      </if>
+      <if test="instockTime != null">
+        instock_time = #{instockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cyh.shop.bean.InstockBean">
+    update instock
+    set
+      img_id = #{imgId,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      num = #{num,jdbcType=INTEGER},
+      bucket = #{bucket,jdbcType=INTEGER},
+      money = #{money,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      instock_time = #{instockTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectStockAllowance" parameterType="java.lang.String" resultType="com.cyh.shop.bean.GoodsBean">
+    SELECT g.id,g.goods_name as goodsName,g.brand_name as brandName,g.specs, IFNULL(qin.inStockNum, 0) - IFNULL(qout.orderNum, 0) AS allowance FROM goods g
+      LEFT JOIN (
+      select goods_id,sum(num) as inStockNum  from instock i where  i.shop_id = #{shopId,jdbcType=VARCHAR} and i.data_flag = 1   GROUP BY i.goods_id
+     ) qin ON g.id = qin.goods_id
+     LEFT JOIN (
+      select goods_id,sum(o.num) as orderNum from order_sys o where shop_id = #{shopId,jdbcType=VARCHAR} and data_flag = 1  GROUP BY o.goods_id
+     ) qout ON g.id= qout.goods_id
+  </select>
+
+  <select id="selectInstockList" parameterType="java.lang.String" resultType="java.util.Map">
+    select g.id, g.goods_name as goodsName,DATE_FORMAT(i.instock_time,'%Y-%m') as instockTime,i.allwance from goods g LEFT JOIN (
+      SELECT goods_id,instock_time,sum(num) as allwance from instock where shop_id =  #{shopId,jdbcType=VARCHAR}
+      and data_flag = 1 and YEAR(instock_time) = YEAR(NOW()) GROUP BY instock_time,goods_id) i
+      on g.id = i.goods_id ORDER BY instockTime asc
+  </select>
+</mapper>

@@ -59,7 +59,9 @@ public class OrderController {
     @PostMapping("/sys/getOrders")
     public Object getOrders(@RequestBody JSONObject jsonObject){
         String shopId = jsonObject.getString("shopId");
-        List<Map> list = orderService.getOrders(shopId);
+        String type = jsonObject.getString("type");
+        String date = jsonObject.getString("date");
+        List<Map> list = orderService.getOrders(shopId,type,date);
         if(list.size() > 0){
             return Result.success().add("data",list);
         }
@@ -68,8 +70,9 @@ public class OrderController {
 
     @PostMapping("/sys/updateInfo")
     public Object updateInfo(@RequestBody JSONObject jsonObject){
-        String bgcolor = jsonObject.getString("bgcolor");
-        int result = orderService.updateInfo(bgcolor);
+        String style = jsonObject.getString("style");
+        String id = jsonObject.getString("id");
+        int result = orderService.updateInfo(id,style);
         if(result > 0){
             return Result.success();
         }

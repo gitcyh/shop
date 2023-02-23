@@ -46,4 +46,10 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectPayoutList" parameterType="java.lang.String" resultType="java.util.Map">
+    select  e.id,e.name as category,e.description,sum(amount) as money from payout p LEFT JOIN expense_category e
+     on p.category_id = e.id and p.shop_id = #{shopId,jdbcType=VARCHAR} and DATE_FORMAT(p.date,'%Y-%m') = DATE_FORMAT(CURDATE(),'%Y-%m')
+    GROUP BY p.category_id,e.name,e.id
+  </select>
 </mapper>

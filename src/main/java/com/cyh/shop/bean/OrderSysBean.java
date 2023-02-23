@@ -87,9 +87,9 @@ public class OrderSysBean implements Serializable {
     private String remark;
 
     /**
-     * 背景颜色
+     * 表格行样式
      */
-    private String bgcolor;
+    private String style;
 
     /**
      * 删除标志1:有效 -1:无效

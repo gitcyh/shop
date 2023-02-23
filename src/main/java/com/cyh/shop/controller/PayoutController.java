@@ -1,5 +1,6 @@
 package com.cyh.shop.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cyh.shop.bean.PayoutBean;
 import com.cyh.shop.service.PayoutService;
 import com.cyh.shop.util.Result;
@@ -59,6 +60,15 @@ public class PayoutController {
         List<Map> payoutBeans = payoutService.getPayoutList();
         if(payoutBeans.size() > 0){
             return Result.success().add("data",payoutBeans);
+        }
+        return Result.fail();
+    }
+    @PostMapping("/getPayoutChart")
+    public Object getPayoutChart(@RequestBody JSONObject jsonObject){
+        String shopId = jsonObject.getString("shopId");
+        List<Map> list = payoutService.getPayoutChart(shopId);
+        if(list.size() > 0){
+            return Result.success().add("data",list);
         }
         return Result.fail();
     }
