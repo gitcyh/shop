@@ -36,8 +36,8 @@ public class DespositService {
         return despositDao.selectByPrimaryKey(id);
     }
 
-    public List<DespositBean> getDesposits(){
-        return despositDao.selectAll();
+    public List<DespositBean> getDesposits(String customerId){
+        return despositDao.selectByCustomerId(customerId);
     }
 
 

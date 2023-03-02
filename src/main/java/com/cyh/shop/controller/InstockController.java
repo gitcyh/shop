@@ -70,6 +70,11 @@ public class InstockController {
         return Result.fail();
     }
 
+    /**
+     * 查询库存余量
+     * @param jsonObject
+     * @return
+     */
     @PostMapping("/getStockQuantity")
     public Object getStockQuantity(@RequestBody JSONObject jsonObject){
         String shopId = jsonObject.getString("shopId");
@@ -77,6 +82,11 @@ public class InstockController {
         return Result.success().add("data",list);
     }
 
+    /**
+     * 查询进货明细表
+     * @param jsonObject
+     * @return
+     */
     @PostMapping("/getInstockList")
     public  Object getInstockList(@RequestBody JSONObject jsonObject){
         String shopId = jsonObject.getString("shopId");

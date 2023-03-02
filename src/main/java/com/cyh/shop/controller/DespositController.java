@@ -1,5 +1,6 @@
 package com.cyh.shop.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cyh.shop.bean.DespositBean;
 import com.cyh.shop.service.DespositService;
 import com.cyh.shop.util.Result;
@@ -56,8 +57,9 @@ public class DespositController {
     }
 
     @PostMapping("/getDesposits")
-    public Object getDesposits(HttpServletRequest request){
-        List<DespositBean> list = despositService.getDesposits();
+    public Object getDesposits(@RequestBody JSONObject jsonObject){
+        String customerId = jsonObject.getString("customerId");
+        List<DespositBean> list = despositService.getDesposits(customerId);
         return Result.success().add("data",list);
     }
 }

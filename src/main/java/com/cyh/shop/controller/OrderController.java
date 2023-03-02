@@ -78,4 +78,32 @@ public class OrderController {
         }
         return Result.fail();
     }
+
+    /**
+     * 统计销售额和数量
+     * @param jsonObject
+     * @return
+     */
+    @PostMapping("/sys/getTotal")
+    public Object getTotal(@RequestBody JSONObject jsonObject){
+        String shopId = jsonObject.getString("shopId");
+        String type = jsonObject.getString("type");
+        String date = jsonObject.getString("date");
+        Map map = orderService.getTotal(shopId,type,date);
+        return Result.success().add("data",map);
+    }
+
+    /**
+     * 统计每天或每月的销售额
+     * @param jsonObject
+     * @return
+     */
+    @PostMapping("/sys/getDataYM")
+    public Object getDataYM(@RequestBody JSONObject jsonObject){
+        String shopId = jsonObject.getString("shopId");
+        String type = jsonObject.getString("type");
+        String date = jsonObject.getString("date");
+        List<Map> map = orderService.getDataYM(shopId,type,date);
+        return Result.success().add("data",map);
+    }
 }

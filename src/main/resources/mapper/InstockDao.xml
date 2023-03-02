@@ -185,13 +185,13 @@
       LEFT JOIN (
       select goods_id,sum(num) as inStockNum  from instock i where  i.shop_id = #{shopId,jdbcType=VARCHAR} and i.data_flag = 1   GROUP BY i.goods_id
      ) qin ON g.id = qin.goods_id
-     LEFT JOIN (
+     INNER JOIN (
       select goods_id,sum(o.num) as orderNum from order_sys o where shop_id = #{shopId,jdbcType=VARCHAR} and data_flag = 1  GROUP BY o.goods_id
      ) qout ON g.id= qout.goods_id
   </select>
 
   <select id="selectInstockList" parameterType="java.lang.String" resultType="java.util.Map">
-    select g.id, g.goods_name as goodsName,DATE_FORMAT(i.instock_time,'%Y-%m') as instockTime,i.allwance from goods g LEFT JOIN (
+    select g.id, g.goods_name as goodsName,DATE_FORMAT(i.instock_time,'%Y-%m') as instockTime,i.allwance from goods g INNER JOIN (
       SELECT goods_id,instock_time,sum(num) as allwance from instock where shop_id =  #{shopId,jdbcType=VARCHAR}
       and data_flag = 1 and YEAR(instock_time) = YEAR(NOW()) GROUP BY instock_time,goods_id) i
       on g.id = i.goods_id ORDER BY instockTime asc

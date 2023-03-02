@@ -19,5 +19,5 @@ public interface DespositDao {
 
     int updateByPrimaryKey(DespositBean record);
 
-    List<DespositBean> selectAll();
+    List<DespositBean> selectByCustomerId(String customerId);
 }

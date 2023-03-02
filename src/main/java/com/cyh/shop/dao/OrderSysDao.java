@@ -12,15 +12,15 @@ public interface OrderSysDao {
 
     int insert(OrderSysBean record);
 
-    int insertSelective(OrderSysBean record);
-
     Map selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(OrderSysBean record);
 
     int updateByPrimaryKey(OrderSysBean record);
 
     List<Map> getOrders(String shopId,String type,String date);
 
     int updateInfo(String id,String style);
+
+    Map selectTotal(String shopId,String type,String date);
+
+    List<Map> selectDataYM(String shopId,String type,String date);
 }

@@ -4,12 +4,15 @@ import com.cyh.shop.bean.CustomerBean;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface CustomerDao {
     int deleteByPrimaryKey(String id);
 
     int insert(CustomerBean record);
+
+    int insertForEach(List<Map<String,Object>> list);
 
     int insertSelective(CustomerBean record);
 
@@ -19,5 +22,7 @@ public interface CustomerDao {
 
     int updateByPrimaryKey(CustomerBean record);
 
-    List<CustomerBean> selectAll(String shopId);
+    List<CustomerBean> selectPage(String shopId,Integer currentPage,Integer pageSize);
+
+    int selectCount(String shopId);
 }

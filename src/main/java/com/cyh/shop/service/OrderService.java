@@ -41,4 +41,12 @@ public class OrderService {
         return orderSysDao.updateInfo(id,style);
     }
 
+    public Map getTotal(String shopId,String type,String date){
+        return orderSysDao.selectTotal(shopId,type,date);
+    }
+
+    public List<Map> getDataYM(String shopId,String type,String date){
+        return orderSysDao.selectDataYM(shopId,type,date);
+    }
+
 }

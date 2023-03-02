@@ -1,6 +1,7 @@
 package com.cyh.shop.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 
@@ -29,6 +30,16 @@ public class CustomerBean implements Serializable {
      * 地址
      */
     private String address;
+
+    /**
+     * 地址经度
+     */
+    private BigDecimal longitude;
+
+    /**
+     * 地址纬度
+     */
+    private BigDecimal latitude;
 
     /**
      * 结算方式0水票1月结2及时支付3其他
