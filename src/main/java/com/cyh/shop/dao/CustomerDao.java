@@ -1,6 +1,7 @@
 package com.cyh.shop.dao;
 
 import com.cyh.shop.bean.CustomerBean;
+import com.cyh.shop.bean.ParameterPage;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface CustomerDao {
 
     int updateByPrimaryKey(CustomerBean record);
 
-    List<CustomerBean> selectPage(String shopId,Integer currentPage,Integer pageSize);
+    List<CustomerBean> selectPage(ParameterPage parameterPage);
 
-    int selectCount(String shopId);
+    int selectCount(String shopId,String value);
 }

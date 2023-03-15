@@ -1,6 +1,7 @@
 package com.cyh.shop.config;
 
 import com.cyh.shop.interceptor.JwtInterceptor;
+import com.cyh.shop.interceptor.WXJwtInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -12,12 +13,20 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor())
-                .addPathPatterns("/**")  //拦截所有请求，通过判断token是佛合法来判断是否需要登录
-                .excludePathPatterns("/login","/register","/forget","/editor/download","/**/export","/**/import");   //排除规则
+                .addPathPatterns("/pc/**")  //拦截所有请求，通过判断token是否合法来判断是否需要登录
+                .excludePathPatterns("/pc/login","/pc/register","/pc/forget","/pc/editor/download","/**/export","/**/import");   //排除规则
+
+        registry.addInterceptor(wxjwtInterceptor())
+                .addPathPatterns("/wx/**")  //拦截所有请求，通过判断token是否合法来判断是否需要登录
+                .excludePathPatterns("/wx/login","/**/export","/**/import");   //排除规则
+
     }
 
     @Bean
     public HandlerInterceptor jwtInterceptor(){
         return new JwtInterceptor();
     }
+
+    @Bean
+    public HandlerInterceptor wxjwtInterceptor(){return new WXJwtInterceptor();}
 }

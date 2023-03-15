@@ -1,6 +1,7 @@
 package com.cyh.shop.service;
 
 import com.cyh.shop.bean.OrderSysBean;
+import com.cyh.shop.bean.ParameterDate;
 import com.cyh.shop.dao.OrderSysDao;
 import com.cyh.shop.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +34,29 @@ public class OrderService {
         return orderSysDao.selectByPrimaryKey(id);
     }
 
-    public List<Map> getOrders(String shopId,String type,String date){
-        return orderSysDao.getOrders(shopId,type,date);
+    public List<Map> getOrders(ParameterDate parameterDate){
+        return orderSysDao.getOrders(parameterDate);
     }
 
     public int updateInfo(String id,String style){
         return orderSysDao.updateInfo(id,style);
     }
 
-    public Map getTotal(String shopId,String type,String date){
-        return orderSysDao.selectTotal(shopId,type,date);
+    public Map getTotal(ParameterDate parameterDate){
+        return orderSysDao.selectTotal(parameterDate);
     }
 
-    public List<Map> getDataYM(String shopId,String type,String date){
-        return orderSysDao.selectDataYM(shopId,type,date);
+    public List<Map> getDataYM(ParameterDate parameterDate){
+        return orderSysDao.selectDataYM(parameterDate);
     }
+
+    public List<Map> getNumByStaff(ParameterDate parameterDate){
+        return orderSysDao.selectNumByStaff(parameterDate);
+    }
+
+    public List<Map> getNumByCustomer(ParameterDate parameterDate){
+        return orderSysDao.selectNumByCustomer(parameterDate);
+    }
+
 
 }

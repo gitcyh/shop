@@ -48,6 +48,11 @@
          INNER JOIN category b on a.shop_id = #{shopId,jdbcType=VARCHAR} and  a.category_id = b.id and a.data_flag = 1
   </select>
 
+  <select id="getWxGoodsList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from goods where shop_id= #{shopId,jdbcType=VARCHAR}
+    and is_sale= 1 and data_flag = 1 order by brand_name asc
+  </select>
+
   <insert id="searchGoods" parameterType="com.cyh.shop.bean.GoodsBean">
     select <include refid="Base_Column_List" /> from goods
     where

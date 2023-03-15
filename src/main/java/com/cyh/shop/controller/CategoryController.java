@@ -5,16 +5,14 @@ import com.cyh.shop.bean.CategoryBean;
 import com.cyh.shop.service.CategoryService;
 import com.cyh.shop.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
+@RequestMapping("/pc")
 public class CategoryController {
 
     @Autowired

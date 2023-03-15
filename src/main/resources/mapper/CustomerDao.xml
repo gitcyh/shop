@@ -17,7 +17,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, shop_id, `name`, address,longitude,latitude settlement, wechat, phone, data_flag, remark, create_time,
+    id, shop_id, `name`, address,longitude,latitude, settlement, wechat, phone, data_flag, remark, create_time,
     update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -29,13 +29,20 @@
 
   <select id="selectCount"  parameterType="java.lang.String" resultType="java.lang.Integer">
     select count(id) from customer where shop_id = #{shopId,jdbcType=VARCHAR} and data_flag = 1
+    <if test="value != null and value != ''">
+      and (address like CONCAT('%',#{value,jdbcType=VARCHAR},'%') or name like CONCAT('%',#{value,jdbcType=VARCHAR},'%'))
+    </if>
   </select>
 
-  <select id="selectPage" resultMap="BaseResultMap">
+  <select id="selectPage" parameterType="com.cyh.shop.bean.ParameterPage" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from customer
     where data_flag = 1 and shop_id = #{shopId,jdbcType=VARCHAR}
+    <if test="value != null and value != ''">
+      and address like CONCAT('%',#{value,jdbcType=VARCHAR},'%')
+    </if>
+    order by address asc
     <if test="currentPage != null and pageSize != null">
       limit #{currentPage,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
     </if>
@@ -51,10 +58,11 @@
   </insert>
 
   <insert id="insertForEach"  parameterType="java.util.List">
-    insert into customer (id,shop_id,address, phone,settlement)
+    insert into customer (id,shop_id,name,address, phone,settlement)
     values
     <foreach collection="list" item="item" separator="," >
-      (#{item.id,jdbcType=VARCHAR},#{item.shopId,jdbcType=VARCHAR}, #{item.address,jdbcType=VARCHAR},#{item.phone,jdbcType=VARCHAR}, #{item.settlement,jdbcType=TINYINT})
+      (#{item.id,jdbcType=VARCHAR},#{item.shopId,jdbcType=VARCHAR},  #{item.name,jdbcType=VARCHAR},
+       #{item.address,jdbcType=VARCHAR},#{item.phone,jdbcType=VARCHAR}, #{item.settlement,jdbcType=TINYINT})
     </foreach>
   </insert>
 

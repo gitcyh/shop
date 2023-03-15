@@ -1,6 +1,7 @@
 package com.cyh.shop.dao;
 
 import com.cyh.shop.bean.OrderSysBean;
+import com.cyh.shop.bean.ParameterDate;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -16,11 +17,15 @@ public interface OrderSysDao {
 
     int updateByPrimaryKey(OrderSysBean record);
 
-    List<Map> getOrders(String shopId,String type,String date);
+    List<Map> getOrders(ParameterDate parameterDate);
 
     int updateInfo(String id,String style);
 
-    Map selectTotal(String shopId,String type,String date);
+    Map selectTotal(ParameterDate parameterDate);
 
-    List<Map> selectDataYM(String shopId,String type,String date);
+    List<Map> selectDataYM(ParameterDate parameterDate);
+
+    List<Map> selectNumByStaff(ParameterDate parameterDate);
+
+    List<Map> selectNumByCustomer(ParameterDate parameterDate);
 }

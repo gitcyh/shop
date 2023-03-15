@@ -4,15 +4,13 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.cyh.shop.bean.CustomerBean;
+import com.cyh.shop.bean.ParameterPage;
 import com.cyh.shop.service.CustomerService;
 import com.cyh.shop.util.Result;
 import com.cyh.shop.util.UUIDUtil;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +19,7 @@ import java.io.IOException;
 import java.util.*;
 
 @RestController
+@RequestMapping("/pc")
 public class CustomerController {
 
     @Autowired
@@ -55,17 +54,14 @@ public class CustomerController {
     }
 
     @PostMapping("/getCustomers")
-    public Object getCustomers(@RequestBody JSONObject jsonObject) {
-        String shopId = jsonObject.getString("shopId");
-        Integer currentPage = jsonObject.getInteger("currentPage");
-        Integer pageSize = jsonObject.getInteger("pageSize");
-        List<CustomerBean> list = customerService.getCustomers(shopId,currentPage,pageSize);
+    public Object getCustomers(@RequestBody  ParameterPage parameterPage) {
+        List<CustomerBean> list = customerService.getCustomers(parameterPage);
         return Result.success().add("data", list);
     }
 
     @GetMapping("/getCountCustomers")
-    public Object getCountCustomers(@PathParam("shopId") String shopId) {
-        int result = customerService.getCountCustomers(shopId);
+    public Object getCountCustomers(@PathParam("shopId") String shopId,@PathParam("value") String value) {
+        int result = customerService.getCountCustomers(shopId,value);
         return Result.success().add("data",result);
     }
 

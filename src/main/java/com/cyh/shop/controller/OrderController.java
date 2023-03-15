@@ -2,19 +2,18 @@ package com.cyh.shop.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cyh.shop.bean.OrderSysBean;
+import com.cyh.shop.bean.ParameterDate;
 import com.cyh.shop.service.OrderService;
 import com.cyh.shop.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/pc")
 public class OrderController {
 
     @Autowired
@@ -57,11 +56,8 @@ public class OrderController {
     }
 
     @PostMapping("/sys/getOrders")
-    public Object getOrders(@RequestBody JSONObject jsonObject){
-        String shopId = jsonObject.getString("shopId");
-        String type = jsonObject.getString("type");
-        String date = jsonObject.getString("date");
-        List<Map> list = orderService.getOrders(shopId,type,date);
+    public Object getOrders(@RequestBody ParameterDate parameterDate){
+        List<Map> list = orderService.getOrders(parameterDate);
         if(list.size() > 0){
             return Result.success().add("data",list);
         }
@@ -85,12 +81,12 @@ public class OrderController {
      * @return
      */
     @PostMapping("/sys/getTotal")
-    public Object getTotal(@RequestBody JSONObject jsonObject){
-        String shopId = jsonObject.getString("shopId");
-        String type = jsonObject.getString("type");
-        String date = jsonObject.getString("date");
-        Map map = orderService.getTotal(shopId,type,date);
-        return Result.success().add("data",map);
+    public Object getTotal(@RequestBody ParameterDate parameterDate){
+        Map map = orderService.getTotal(parameterDate);
+        if(map != null){
+            return Result.success().add("data",map);
+        }
+        return Result.fail();
     }
 
     /**
@@ -99,11 +95,32 @@ public class OrderController {
      * @return
      */
     @PostMapping("/sys/getDataYM")
-    public Object getDataYM(@RequestBody JSONObject jsonObject){
-        String shopId = jsonObject.getString("shopId");
-        String type = jsonObject.getString("type");
-        String date = jsonObject.getString("date");
-        List<Map> map = orderService.getDataYM(shopId,type,date);
+    public Object getDataYM(@RequestBody ParameterDate parameterDate){
+        List<Map> map = orderService.getDataYM(parameterDate);
         return Result.success().add("data",map);
     }
+
+    /**
+     * 统计员工送货排名
+     * @param parameterDate
+     * @return
+     */
+    @PostMapping("/sys/getNumByStaff")
+    public Object getNumByStaff(@RequestBody ParameterDate parameterDate){
+        List<Map> map = orderService.getNumByStaff(parameterDate);
+        return Result.success().add("data",map);
+    }
+
+    /**
+     * 查询客户消费数量
+     * @param parameterDate
+     * @return
+     */
+    @PostMapping("/sys/getNumByCustomer")
+    public Object getNumByCustomer(@RequestBody ParameterDate parameterDate){
+        List<Map> map = orderService.getNumByCustomer(parameterDate);
+        return Result.success().add("data",map);
+    }
+
+
 }
