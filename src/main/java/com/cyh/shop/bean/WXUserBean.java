@@ -60,7 +60,7 @@ public class WXUserBean implements Serializable {
     /**
      * 国家
      */
-    private String contry;
+    private String country;
 
     /**
      * 用户头像地址

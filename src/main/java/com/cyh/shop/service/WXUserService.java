@@ -5,7 +5,9 @@ package com.cyh.shop.service;
 
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.cyh.shop.bean.CustomerBean;
 import com.cyh.shop.bean.WXUserBean;
+import com.cyh.shop.dao.CustomerDao;
 import com.cyh.shop.dao.WXUserDao;
 import com.cyh.shop.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class WXUserService {
 
     @Autowired
     private WXUserDao wxUserDao;
+
+    @Autowired
+    private CustomerDao customerDao;
 
     @Value("${spring.wx.appSecret}")
     private String secret;

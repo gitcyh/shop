@@ -18,7 +18,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(wxjwtInterceptor())
                 .addPathPatterns("/wx/**")  //拦截所有请求，通过判断token是否合法来判断是否需要登录
-                .excludePathPatterns("/wx/login","/**/export","/**/import");   //排除规则
+                .excludePathPatterns("/wx/login","/wx/getIndexGoods","/wx/getGoodsList","/wx/download","/**/export","/**/import");   //排除规则
 
     }
 

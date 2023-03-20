@@ -33,6 +33,7 @@ public class CustomerService {
                 map.put("shopId",shopId);
                 map.put("id", UUIDUtil.generateId());
                 map.put("name","系统录入");
+                map.put("customerForm",0);
                 String value = itemMap.get(k) == null ? "" : itemMap.get(k).toString().trim();
                 if(k.trim().equals("客户地址")){
                     map.put("address",value);

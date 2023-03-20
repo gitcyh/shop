@@ -32,6 +32,16 @@ public class WXGoodsController {
     }
 
     /**
+     * 微信首页商品展示
+     * @return
+     */
+    @PostMapping("/getIndexGoods")
+    public Object getIndexGoods(){
+        List<GoodsBean> goodsBeans = wxGoodsService.getIndexGoods();
+        return Result.success().add("data",goodsBeans);
+    }
+
+    /**
      * @param id 文件id
      * @param response
      * @功能描述 下载文件:

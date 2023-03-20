@@ -47,6 +47,12 @@ public class CustomerBean implements Serializable {
     private Byte settlement;
 
     /**
+     * 客户来源0默认人工录入1是微信客户
+     */
+    private Byte customerForm;
+
+
+    /**
      * 微信号
      */
     private String wechat;

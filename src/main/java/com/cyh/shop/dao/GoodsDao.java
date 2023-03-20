@@ -25,4 +25,6 @@ public interface GoodsDao {
     int handleShelfGoods(String id,Integer isSale);
 
     List<GoodsBean> getWxGoodsList(String shopId);
+
+    List<GoodsBean> selectIndexGoods();
 }

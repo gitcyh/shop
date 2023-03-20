@@ -12,7 +12,7 @@
     <result column="province" jdbcType="VARCHAR" property="province" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="city" jdbcType="VARCHAR" property="city" />
-    <result column="contry" jdbcType="VARCHAR" property="contry" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
     <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
     <result column="iv" jdbcType="VARCHAR" property="iv" />
     <result column="signature" jdbcType="VARCHAR" property="signature" />
@@ -24,7 +24,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, code, cloud_id, encrypted_data, nick_name, gender, `language`, province, phone, 
-    city, contry, avatar_url, signature,iv, session_key, unionid, openid, create_time, update_time
+    city, country, avatar_url, signature,iv, session_key, unionid, openid, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -40,14 +40,14 @@
     insert into wxuser (id, code, cloud_id, 
       encrypted_data, nick_name, gender, 
       `language`, province, phone, 
-      city, contry, avatar_url,
+      city, country, avatar_url,
       signature, session_key, unionid, 
       openid, iv
       )
     values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{cloudId,jdbcType=VARCHAR}, 
       #{encryptedData,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
       #{language,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{contry,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR},
+      #{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR},
       #{signature,jdbcType=VARCHAR}, #{sessionKey,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR}, 
       #{openid,jdbcType=VARCHAR}, #{iv,jdbcType=VARCHAR}
       )
@@ -85,8 +85,8 @@
       <if test="city != null">
         city,
       </if>
-      <if test="contry != null">
-        contry,
+      <if test="country != null">
+        country,
       </if>
       <if test="avatarUrl != null">
         avatar_url,
@@ -138,8 +138,8 @@
       <if test="city != null">
         #{city,jdbcType=VARCHAR},
       </if>
-      <if test="contry != null">
-        #{contry,jdbcType=VARCHAR},
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
       </if>
       <if test="avatarUrl != null">
         #{avatarUrl,jdbcType=VARCHAR},
@@ -191,8 +191,8 @@
       <if test="city != null">
         city = #{city,jdbcType=VARCHAR},
       </if>
-      <if test="contry != null">
-        contry = #{contry,jdbcType=VARCHAR},
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
       </if>
       <if test="avatarUrl != null">
         avatar_url = #{avatarUrl,jdbcType=VARCHAR},
@@ -232,7 +232,7 @@
       province = #{province,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
-      contry = #{contry,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
       avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       signature = #{signature,jdbcType=VARCHAR},
       iv = #{iv,jdbcType=VARCHAR},

@@ -12,12 +12,13 @@
     <result column="wechat" jdbcType="VARCHAR" property="wechat" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="data_flag" jdbcType="TINYINT" property="dataFlag" />
+    <result column="customer_form" jdbcType="TINYINT" property="customerForm" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, shop_id, `name`, address,longitude,latitude, settlement, wechat, phone, data_flag, remark, create_time,
+    id, shop_id, `name`, address,longitude,latitude, settlement, wechat, phone, data_flag,customer_form, remark, create_time,
     update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -52,17 +53,17 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.cyh.shop.bean.CustomerBean" >
-    insert into customer (id,shop_id, `name`, address,settlement, wechat, phone, remark)
+    insert into customer (id,shop_id, `name`, address,settlement, wechat, phone, remark,customer_form)
     values (#{id,jdbcType=VARCHAR},#{shopId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
-            #{settlement,jdbcType=TINYINT}, #{wechat,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+            #{settlement,jdbcType=TINYINT}, #{wechat,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},#{customerForm,jdbcType=TINYINT})
   </insert>
 
   <insert id="insertForEach"  parameterType="java.util.List">
-    insert into customer (id,shop_id,name,address, phone,settlement)
+    insert into customer (id,shop_id,name,address, phone,settlement,customer_form)
     values
     <foreach collection="list" item="item" separator="," >
       (#{item.id,jdbcType=VARCHAR},#{item.shopId,jdbcType=VARCHAR},  #{item.name,jdbcType=VARCHAR},
-       #{item.address,jdbcType=VARCHAR},#{item.phone,jdbcType=VARCHAR}, #{item.settlement,jdbcType=TINYINT})
+       #{item.address,jdbcType=VARCHAR},#{item.phone,jdbcType=VARCHAR}, #{item.settlement,jdbcType=TINYINT}, #{item.customerForm,jdbcType=TINYINT})
     </foreach>
   </insert>
 

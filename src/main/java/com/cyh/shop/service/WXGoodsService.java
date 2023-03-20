@@ -18,4 +18,10 @@ public class WXGoodsService {
         return goodsDao.getWxGoodsList(shopId);
     }
 
+    public List<GoodsBean> getIndexGoods(){
+        return goodsDao.selectIndexGoods();
+    }
+
+
+
 }
